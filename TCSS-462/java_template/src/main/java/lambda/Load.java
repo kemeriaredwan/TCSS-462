@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package lambda;
+
+import java.io.IOException;
+import java.util.HashMap;
+import jdk.javadoc.internal.doclets.toolkit.builders.AbstractBuilder.Context;
 
 /**
  *
  * @author betelhem
  */
 public class Load {
+    public HashMap<String, Object> handleRequest(Request request, Context context) throws IOException{
+        
+    return null;
+    }
     
 }
