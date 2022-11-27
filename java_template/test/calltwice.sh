@@ -1,3 +1,0 @@
-./callservice.sh &
-./callservice.sh
-
