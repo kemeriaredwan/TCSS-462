@@ -2,6 +2,7 @@
 package lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -17,13 +18,13 @@ import java.util.*;
  *
  * @author betelhem
  */
-public class Transform {
+public class Transform implements RequestHandler<Request, HashMap<String, Object>>{
     String filename ="";
     String bucketname="";
     int orderID = 6;
     boolean duplicated = false;
     
-      public HashMap<String, Object> handleRequest(Request request, Context context) throws IOException{
+      public HashMap<String, Object> handleRequest(Request request, Context context){
           
           Inspector inspector = new Inspector();
           inspector.inspectAll();
@@ -37,7 +38,12 @@ public class Transform {
           
           //get content of the file
           InputStream objectData = s3Object.getObjectContent(); 
-          
+          try{
+             dataInputStream(objectData);
+        }
+          catch(IOException ex){
+              //System.out.println("File not found",null,ex);
+          }
           
       
           return inspector.finish();
@@ -107,9 +113,9 @@ public class Transform {
         // Create new file on S3
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard().build();
         s3Client.putObject(bucketname, "test.csv", is, meta);
+        
+         
     }
-
-
 
 }
            
